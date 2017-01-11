@@ -1,4 +1,4 @@
-package co.paulburke.android.itemtouchhelperdemo.helper;
+package ebozkurt.listtodo.RecyclerView_Helper;
 
 import android.support.v7.widget.helper.ItemTouchHelper;
 

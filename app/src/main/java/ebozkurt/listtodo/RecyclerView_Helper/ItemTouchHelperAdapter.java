@@ -1,6 +1,7 @@
-package co.paulburke.android.itemtouchhelperdemo.helper;
-
+package ebozkurt.listtodo.RecyclerView_Helper;
 import android.support.v7.widget.RecyclerView;
+
+import ebozkurt.listtodo.Task;
 
 /**
  * Interface to notify a {@link RecyclerView.Adapter} of moving and dismissal event from a {@link

@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +15,17 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.List;
 
+import ebozkurt.listtodo.RecyclerView_Helper.ItemTouchHelperAdapter;
+import ebozkurt.listtodo.RecyclerView_Helper.ItemTouchHelperViewHolder;
+import ebozkurt.listtodo.RecyclerView_Helper.SimpleItemTouchHelperCallback;
 
 
-public class AllListFragment extends Fragment  {
+public class AllListFragment extends Fragment {
 
     private static final String TAG = "AllListFragment";
 
@@ -59,6 +64,13 @@ public class AllListFragment extends Fragment  {
 
         updateUI();
 
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(mTaskRecyclerView);
+
+
+
+
         return view;
     }
 
@@ -76,6 +88,7 @@ public class AllListFragment extends Fragment  {
         if (mAdapter == null) {
             mAdapter = new TaskAdapter(tasks);
             mTaskRecyclerView.setAdapter(mAdapter);
+
         } else {
             mAdapter.notifyDataSetChanged();
         }
@@ -96,7 +109,7 @@ public class AllListFragment extends Fragment  {
     }
 
 
-    private class TaskHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class TaskHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ItemTouchHelperViewHolder {
         private Task mTask;
         private TextView mTitleTextView;
         private TextView mDescriptionTextView;
@@ -147,12 +160,15 @@ public class AllListFragment extends Fragment  {
 
         }
 
+
         @Override
         public void onClick(View v) {
             Log.i(TAG, mTask.getTitle() + " clicked");
 
             Intent intent = TaskActivity.newIntent(getActivity(), mTask.getId());
             startActivity(intent);
+
+
 
 /*
             removeTask(mTask);
@@ -163,10 +179,23 @@ public class AllListFragment extends Fragment  {
 */
         }
 
+        @Override
+        public void onItemSelected() {
+            itemView.setBackgroundColor(Color.LTGRAY);
+            Log.i(TAG, "onItemSelected: ");
+        }
+
+        @Override
+        public void onItemClear() {
+            Log.i(TAG, "onItemClear: ");
+            itemView.setBackgroundColor(0);
+        }
     }
 
 
-    private class TaskAdapter extends RecyclerView.Adapter<TaskHolder> {
+
+
+    private class TaskAdapter extends RecyclerView.Adapter<TaskHolder> implements ItemTouchHelperAdapter {
         private List<Task> mTasks;
 
         public TaskAdapter(List<Task> tasks) {
@@ -202,9 +231,27 @@ public class AllListFragment extends Fragment  {
         }
 
         @Override
+        public void onItemMove(int fromPosition, int toPosition) {
+            Task prev = mTasks.remove(fromPosition);
+            mTasks.add(toPosition > fromPosition ? toPosition -1 : toPosition, prev);
+            Log.i(TAG, "onItemMove: ");
+            notifyItemMoved(fromPosition, toPosition);
+        }
+
+        @Override
+        public void onItemDismiss(int position) {
+            //mItems.remove(position);
+            //removeTask(task);
+            //removeTask();
+            Log.i(TAG, "onItemDismiss: ");
+            mTasks.remove(position);
+            notifyItemRemoved(position);
+        }
+        @Override
         public int getItemCount() {
             return mTasks.size();
         }
+
     }
 
 }
