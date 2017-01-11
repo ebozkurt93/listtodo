@@ -27,7 +27,7 @@ public class AllListFragment extends Fragment  {
     private RecyclerView mTaskRecyclerView;
     private TaskAdapter mAdapter;
 
-
+//todo add recyclerview swipe/drag
     //private FloatingActionButton mAddTaskFloatingActionButton;
 
     /* public static AllListFragment newInstance(){
