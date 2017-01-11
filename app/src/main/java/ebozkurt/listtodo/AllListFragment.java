@@ -2,9 +2,12 @@ package ebozkurt.listtodo;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -15,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import java.util.List;
@@ -32,7 +34,6 @@ public class AllListFragment extends Fragment {
     private RecyclerView mTaskRecyclerView;
     private TaskAdapter mAdapter;
 
-//todo add recyclerview swipe/drag
     //private FloatingActionButton mAddTaskFloatingActionButton;
 
     /* public static AllListFragment newInstance(){
@@ -52,6 +53,8 @@ public class AllListFragment extends Fragment {
                 .findViewById(R.id.fragment_all_tasks_list_recycler_view);
         mTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //Todo later try staggered grid layout manager!!
+
+
 
         FloatingActionButton mAddTaskFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.fragment_all_tasks_list_add_task_floating_action_button);
         mAddTaskFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +105,7 @@ public class AllListFragment extends Fragment {
     }
 
     private void removeTask(Task task) {
-        //todo add remove task parts from bottom to here(after swipe works properly)
+        //todo remove this if not required later
         //Task t = task;
         TaskLab.get(getActivity()).removeTask(task);
 
@@ -182,13 +185,15 @@ public class AllListFragment extends Fragment {
         @Override
         public void onItemSelected() {
             itemView.setBackgroundColor(Color.LTGRAY);
-            Log.i(TAG, "onItemSelected: ");
+            Log.i(TAG, "onItemSelected: " );
         }
 
         @Override
         public void onItemClear() {
             Log.i(TAG, "onItemClear: ");
             itemView.setBackgroundColor(0);
+            //mTaskRecyclerView.invalidate();
+            //updateUI();
         }
     }
 
@@ -201,6 +206,7 @@ public class AllListFragment extends Fragment {
         public TaskAdapter(List<Task> tasks) {
             mTasks = tasks;
         }
+
 
 
         @Override
@@ -232,9 +238,12 @@ public class AllListFragment extends Fragment {
 
         @Override
         public void onItemMove(int fromPosition, int toPosition) {
+
             Task prev = mTasks.remove(fromPosition);
             mTasks.add(toPosition > fromPosition ? toPosition -1 : toPosition, prev);
-            Log.i(TAG, "onItemMove: ");
+            //todo check here, there is a multiplication/position swap issue after swaps
+
+            Log.i(TAG, "onItemMove: " + fromPosition + " " + toPosition);
             notifyItemMoved(fromPosition, toPosition);
         }
 
@@ -243,9 +252,10 @@ public class AllListFragment extends Fragment {
             //mItems.remove(position);
             //removeTask(task);
             //removeTask();
-            Log.i(TAG, "onItemDismiss: ");
+            Log.i(TAG, "onItemDismiss: " + position);
             mTasks.remove(position);
             notifyItemRemoved(position);
+            //notifyDataSetChanged();
         }
         @Override
         public int getItemCount() {

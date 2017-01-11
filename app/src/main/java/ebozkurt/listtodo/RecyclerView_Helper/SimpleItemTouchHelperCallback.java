@@ -2,13 +2,6 @@ package ebozkurt.listtodo.RecyclerView_Helper;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
-
-import ebozkurt.listtodo.AllListFragment;
-import ebozkurt.listtodo.Task;
-import ebozkurt.listtodo.TaskFragment;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * An implementation of {@link ItemTouchHelper.Callback} that enables basic drag & drop and
@@ -21,7 +14,7 @@ import static android.content.ContentValues.TAG;
  * @author Paul Burke (ipaulpro)
  */
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
-    
+
 
     private final ItemTouchHelperAdapter mAdapter;
 
@@ -55,6 +48,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
         mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
+
     }
 
     @Override
