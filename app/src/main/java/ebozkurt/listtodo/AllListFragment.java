@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,19 +18,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ebozkurt.listtodo.RecyclerView_Helper.ItemTouchHelperAdapter;
-import ebozkurt.listtodo.RecyclerView_Helper.SimpleItemTouchHelperCallback;
 
 
-public class AllListFragment extends Fragment implements ItemTouchHelperAdapter {
+public class AllListFragment extends Fragment  {
 
     private static final String TAG = "AllListFragment";
 
     private RecyclerView mTaskRecyclerView;
     private TaskAdapter mAdapter;
-    private ItemTouchHelperAdapter mItemTouchHelperAdapter;
-    private SimpleItemTouchHelperCallback mSimpleItemTouchHelperCallback;
-    private ItemTouchHelper mItemTouchHelper;
 
 
     //private FloatingActionButton mAddTaskFloatingActionButton;
@@ -63,26 +57,11 @@ public class AllListFragment extends Fragment implements ItemTouchHelperAdapter 
             }
         });
 
-
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mItemTouchHelperAdapter);
-        mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(mTaskRecyclerView);
-
         updateUI();
 
         return view;
     }
 
-
-    @Override
-    public void onItemDismiss(int position) {
-        Log.i(TAG, "onItemDismiss: demo");
-    }
-
-    @Override
-    public void onItemMove(int fromPosition, int toPosition) {
-        Log.i(TAG, "onItemMove: demo 2 ");
-    }
 
     @Override
     public void onResume() {
