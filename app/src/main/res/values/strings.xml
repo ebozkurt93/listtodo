@@ -1,0 +1,10 @@
+<resources>
+    <!-- DO NOT CHANGE -->
+    <string name="app_name">List Todo</string>
+    <!-- -->
+    <string name="task_title_hint">Please enter a title</string>
+    <string name="task_description_hint">Please enter a description</string>
+    <string name="task_checkbox_text">Done</string>
+
+
+</resources>
