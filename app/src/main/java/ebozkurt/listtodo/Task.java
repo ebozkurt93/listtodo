@@ -10,6 +10,7 @@ public class Task {
     private String mDescription;
     private boolean mDone;
     private int mPriority; //4 levels(low, medium, high, very high) = 0,1,2,3
+    private Task mParentTask;
 
     //add priority value (int)
     //sound, image, contact later
@@ -56,5 +57,13 @@ public class Task {
 
     public void setPriority(int priority) {
         mPriority = priority;
+    }
+
+    public Task getParentTask() {
+        return mParentTask;
+    }
+
+    public void setParentTask(Task parentTask) {
+        mParentTask = parentTask;
     }
 }

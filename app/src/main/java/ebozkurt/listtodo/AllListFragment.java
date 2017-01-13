@@ -161,10 +161,12 @@ public class AllListFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.i(TAG, mTask.getTitle() + " clicked");
-
+            String s = mTask.getParentTask().getTitle();
+            Log.i(TAG, "parent task: " + s);
+/*
             Intent intent = TaskActivity.newIntent(getActivity(), mTask.getId());
             startActivity(intent);
-
+*/
 
 
 /*
