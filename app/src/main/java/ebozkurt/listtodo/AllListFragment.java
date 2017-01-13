@@ -2,12 +2,9 @@ package ebozkurt.listtodo;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -108,7 +105,6 @@ public class AllListFragment extends Fragment {
         //todo remove this if not required later
         //Task t = task;
         TaskLab.get(getActivity()).removeTask(task);
-
     }
 
 
@@ -136,8 +132,6 @@ public class AllListFragment extends Fragment {
             mDoneCheckBox.setChecked(mTask.isDone());
             setPriorityColor(mTask);
             //mPriorityView.setBackgroundColor(244);
-
-
         }
 
 
@@ -192,9 +186,13 @@ public class AllListFragment extends Fragment {
         public void onItemClear() {
             Log.i(TAG, "onItemClear: ");
             itemView.setBackgroundColor(0);
-            //mTaskRecyclerView.invalidate();
-            //updateUI();
+            /*
+            mTaskRecyclerView.invalidate();
+            updateUI();*/
+           // mAdapter.notifyDataSetChanged();
         }
+
+
     }
 
 
@@ -222,13 +220,12 @@ public class AllListFragment extends Fragment {
             final Task task = mTasks.get(position);
             holder.bindTask(task);
 
-            //holder.mDoneCheckBox.setOnCheckedChangeListener(null);
-            // holder.mDoneCheckBox.setChecked(task.isDone());
+
             holder.mDoneCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (compoundButton.isPressed())/*used for checking if checkbox is accually pressed,
-                    to prevent random checkbox toggles after recyclerview is scrolled*/ {
+                    if (compoundButton.isPressed())//used for checking if checkbox is accually pressed, to prevent random checkbox toggles after recyclerview is scrolled
+                    {
                         Log.i(TAG, task.getTitle() + " checkbox changed to " + b);
                         task.setDone(b);
                     }
@@ -240,28 +237,24 @@ public class AllListFragment extends Fragment {
         public void onItemMove(int fromPosition, int toPosition) {
 
             Task prev = mTasks.remove(fromPosition);
-            mTasks.add(toPosition > fromPosition ? toPosition -1 : toPosition, prev);
-            //todo check here, there is a multiplication/position swap issue after swaps
-
+            mTasks.add(toPosition, prev);
             Log.i(TAG, "onItemMove: " + fromPosition + " " + toPosition);
             notifyItemMoved(fromPosition, toPosition);
         }
 
         @Override
         public void onItemDismiss(int position) {
-            //mItems.remove(position);
-            //removeTask(task);
-            //removeTask();
             Log.i(TAG, "onItemDismiss: " + position);
             mTasks.remove(position);
-            notifyItemRemoved(position);
-            //notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
         }
+
         @Override
         public int getItemCount() {
             return mTasks.size();
         }
 
     }
+
 
 }
