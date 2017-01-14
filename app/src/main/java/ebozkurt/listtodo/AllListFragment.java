@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 
 import java.util.List;
+import java.util.UUID;
 
 import ebozkurt.listtodo.RecyclerView_Helper.ItemTouchHelperAdapter;
 import ebozkurt.listtodo.RecyclerView_Helper.ItemTouchHelperViewHolder;
@@ -48,12 +50,13 @@ public class AllListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_all_tasks_list, container, false);
         mTaskRecyclerView = (RecyclerView) view
                 .findViewById(R.id.fragment_all_tasks_list_recycler_view);
-        mTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+         mTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mTaskRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
         //Todo later try staggered grid layout manager!!
 
 
 
-        FloatingActionButton mAddTaskFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.fragment_all_tasks_list_add_task_floating_action_button);
+        final FloatingActionButton mAddTaskFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.fragment_all_tasks_list_add_task_floating_action_button);
         mAddTaskFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +71,22 @@ public class AllListFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(mTaskRecyclerView);
 
+        mTaskRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 ||dy<0 && mAddTaskFloatingActionButton.isShown())
+                    mAddTaskFloatingActionButton.hide();
+                super.onScrolled(recyclerView, dx, dy);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    mAddTaskFloatingActionButton.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
 
 
 
@@ -161,8 +180,11 @@ public class AllListFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.i(TAG, mTask.getTitle() + " clicked");
-            String s = mTask.getParentTask().getTitle();
-            Log.i(TAG, "parent task: " + s);
+            String title = mTask.getParentTask().getTitle();
+            Log.i(TAG, "parent:" + title);
+            int level = mTask.getLevel(mTask);
+            Log.i(TAG, "level " + level);
+
 /*
             Intent intent = TaskActivity.newIntent(getActivity(), mTask.getId());
             startActivity(intent);
