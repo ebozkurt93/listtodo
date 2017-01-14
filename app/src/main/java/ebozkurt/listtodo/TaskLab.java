@@ -24,7 +24,7 @@ public class TaskLab {
         mTasks = new ArrayList<>();
 
         Task parentTask = new Task();
-
+/*
         for (int i = 0; i < 20; i++) {
             Task task = new Task();
             task.setTitle("Task #" + i);
@@ -37,7 +37,7 @@ public class TaskLab {
             task.setParentTask(parentTask);
             mTasks.add(task);
         }
-
+*/
     }
 
     public void addTask(Task t) {
@@ -65,4 +65,6 @@ public class TaskLab {
         Task t = getTask(id);
         return t.getParentTask();
     }
+
+
 }

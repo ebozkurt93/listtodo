@@ -5,6 +5,8 @@
     <string name="task_title_hint">Please enter a title</string>
     <string name="task_description_hint">Please enter a description</string>
     <string name="task_checkbox_text">Done</string>
+    <string name="task_title_empty">Title is empty</string>
+    <string name="task_title_rename">Too short title, task is renamed</string>
 
 
 </resources>

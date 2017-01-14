@@ -52,8 +52,6 @@ public class AllListFragment extends Fragment {
                 .findViewById(R.id.fragment_all_tasks_list_recycler_view);
          mTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mTaskRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
-        //Todo later try staggered grid layout manager!!
-
 
 
         final FloatingActionButton mAddTaskFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.fragment_all_tasks_list_add_task_floating_action_button);
@@ -120,12 +118,6 @@ public class AllListFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void removeTask(Task task) {
-        //todo remove this if not required later
-        //Task t = task;
-        TaskLab.get(getActivity()).removeTask(task);
-    }
-
 
     private class TaskHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ItemTouchHelperViewHolder {
         private Task mTask;
@@ -180,24 +172,15 @@ public class AllListFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.i(TAG, mTask.getTitle() + " clicked");
+            /*
             String title = mTask.getParentTask().getTitle();
             Log.i(TAG, "parent:" + title);
             int level = mTask.getLevel(mTask);
             Log.i(TAG, "level " + level);
-
-/*
+            */
+            
             Intent intent = TaskActivity.newIntent(getActivity(), mTask.getId());
             startActivity(intent);
-*/
-
-
-/*
-            removeTask(mTask);
-            mAdapter.notifyDataSetChanged();
-            mTaskRecyclerView.invalidate();
-            Log.i(TAG, "invalidation");
-            updateUI();
-*/
         }
 
         @Override

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,14 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadFactory;
 
 
 public class TaskFragment extends Fragment {
@@ -39,9 +46,12 @@ public class TaskFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);UUID taskId = (UUID)getArguments().getSerializable(ARG_TASK_ID);
+        super.onCreate(savedInstanceState);
+        UUID taskId = (UUID) getArguments().getSerializable(ARG_TASK_ID);
         mTask = TaskLab.get(getActivity()).getTask(taskId);
-      //  setHasOptionsMenu(true); //maybe later needed for navigation up button
+        //  setHasOptionsMenu(true); //maybe later needed for navigation up button
+
+
     }
 
     @Override
@@ -60,10 +70,11 @@ public class TaskFragment extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 Log.i(TAG, "title text changed to " + charSequence.toString());
                 mTask.setTitle(charSequence.toString());
-
-              /*  if (charSequence.length() >= 30){
-                    mTitleField.setError("bla bla");
-                }*/
+                /*
+                if(charSequence.length() == 0){
+                    mTitleField.setError(getResources().getString(R.string.task_title_empty));
+                }
+*/
             }
 
             @Override
@@ -122,5 +133,19 @@ public class TaskFragment extends Fragment {
         });
 
         return v;
+    }
+
+
+    @Override
+    public void onPause() {
+        if (mTask.getTitle() == null) {
+            Toast.makeText(getContext(), R.string.task_title_rename, Toast.LENGTH_SHORT).show();
+            TaskLab taskLab = TaskLab.get(getActivity());
+            List<Task> tasks = taskLab.getTasks();
+            tasks.remove(mTask);
+//todo add this parts into back button of fragment, if it stays this way than will break app in case of press button of add new task,
+// go to other app, return back, than fill parts and try to create a null task
+            super.onPause();
+        }
     }
 }
