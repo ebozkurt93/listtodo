@@ -135,7 +135,7 @@ public class TaskFragment extends Fragment {
         return v;
     }
 
-
+/*
     @Override
     public void onPause() {
         if (mTask.getTitle() == null) {
@@ -147,5 +147,5 @@ public class TaskFragment extends Fragment {
 // go to other app, return back, than fill parts and try to create a null task
             super.onPause();
         }
-    }
+    }*/
 }
