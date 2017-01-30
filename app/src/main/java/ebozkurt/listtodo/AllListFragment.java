@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -149,22 +150,22 @@ public class AllListFragment extends Fragment {
         public void setPriorityColor(Task task) {
             mTask = task;
             int i = mTask.getPriority();
-            String s = " ";
+            int s = 0;
             switch (i) {
                 case 0:
-                    s = "#ffbf00";
+                   s = ContextCompat.getColor(getContext(), R.color.priority0);
                     break;
                 case 1:
-                    s = "#ff8000";
+                    s = ContextCompat.getColor(getContext(), R.color.priority1);
                     break;
                 case 2:
-                    s = "#ff4000";
+                    s = ContextCompat.getColor(getContext(), R.color.priority2);
                     break;
                 case 3:
-                    s = "#ff0000";
+                    s = ContextCompat.getColor(getContext(), R.color.priority3);
                     break;
             }
-            mPriorityView.setBackgroundColor(Color.parseColor(s));
+            mPriorityView.setBackgroundColor(s);
 
         }
 
