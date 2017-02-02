@@ -7,12 +7,12 @@
     <color name="colorAccent">#FF5252</color>
     <color name="textColorPrimary">#212121</color>
 
-    <!-- http://meyerweb.com/eric/tools/color-blend/#009688:FF5252:2:hex
+    <!-- http://meyerweb.com/eric/tools/color-blend/#009688:FF5252:4:hex
     used colorPrimary and colorAccent from main theme -->
-    <color name="priority3">#f44336</color>
-    <color name="priority2">#aa6964</color>
-    <color name="priority1">#557f76</color>
-    <color name="priority0">#009688</color>
+    <color name="priority3">#CC605D</color>
+    <color name="priority2">#996D68</color>
+    <color name="priority1">#667B72</color>
+    <color name="priority0">#33887D</color>
 
 
 </resources>
