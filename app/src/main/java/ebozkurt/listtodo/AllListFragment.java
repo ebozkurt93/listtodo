@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
@@ -51,7 +52,7 @@ public class AllListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_all_tasks_list, container, false);
         mTaskRecyclerView = (RecyclerView) view
                 .findViewById(R.id.fragment_all_tasks_list_recycler_view);
-         mTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mTaskRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
 
 
@@ -73,20 +74,19 @@ public class AllListFragment extends Fragment {
         mTaskRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0 ||dy<0 && mAddTaskFloatingActionButton.isShown())
+                if (dy > 0 || dy < 0 && mAddTaskFloatingActionButton.isShown())
                     mAddTaskFloatingActionButton.hide();
                 super.onScrolled(recyclerView, dx, dy);
             }
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     mAddTaskFloatingActionButton.show();
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
-
 
 
         return view;
@@ -153,7 +153,7 @@ public class AllListFragment extends Fragment {
             int s = 0;
             switch (i) {
                 case 0:
-                   s = ContextCompat.getColor(getContext(), R.color.priority0);
+                    s = ContextCompat.getColor(getContext(), R.color.priority0);
                     break;
                 case 1:
                     s = ContextCompat.getColor(getContext(), R.color.priority1);
@@ -179,7 +179,7 @@ public class AllListFragment extends Fragment {
             int level = mTask.getLevel(mTask);
             Log.i(TAG, "level " + level);
             */
-            
+
             Intent intent = TaskActivity.newIntent(getActivity(), mTask.getId());
             startActivity(intent);
         }
@@ -187,7 +187,7 @@ public class AllListFragment extends Fragment {
         @Override
         public void onItemSelected() {
             itemView.setBackgroundColor(Color.LTGRAY);
-            Log.i(TAG, "onItemSelected: " );
+            Log.i(TAG, "onItemSelected: ");
         }
 
         @Override
@@ -197,13 +197,11 @@ public class AllListFragment extends Fragment {
             /*
             mTaskRecyclerView.invalidate();
             updateUI();*/
-           // mAdapter.notifyDataSetChanged();
+            // mAdapter.notifyDataSetChanged();
         }
 
 
     }
-
-
 
 
     private class TaskAdapter extends RecyclerView.Adapter<TaskHolder> implements ItemTouchHelperAdapter {
@@ -212,7 +210,6 @@ public class AllListFragment extends Fragment {
         public TaskAdapter(List<Task> tasks) {
             mTasks = tasks;
         }
-
 
 
         @Override
@@ -251,10 +248,20 @@ public class AllListFragment extends Fragment {
         }
 
         @Override
-        public void onItemDismiss(int position) {
+        public void onItemDismiss(final int position) {
             Log.i(TAG, "onItemDismiss: " + position);
-            mTasks.remove(position);
+            final Task deleted = mTasks.remove(position);
             mAdapter.notifyDataSetChanged();
+            Snackbar.make(mTaskRecyclerView, R.string.task_deleted, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.undo, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //todo restore task
+                            mTasks.add(position,deleted);
+                            notifyDataSetChanged();
+                            Log.i(TAG, "Task " + deleted.getTitle() + " is restored to position " + position);
+                        }
+                    }).show();
         }
 
         @Override

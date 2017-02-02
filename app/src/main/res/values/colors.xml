@@ -8,7 +8,7 @@
     <color name="textColorPrimary">#212121</color>
 
     <!-- http://meyerweb.com/eric/tools/color-blend/#009688:FF5252:4:hex
-    used colorPrimary and colorAccent from main theme -->
+    used colors between colorPrimary and colorAccent from main theme -->
     <color name="priority3">#CC605D</color>
     <color name="priority2">#996D68</color>
     <color name="priority1">#667B72</color>

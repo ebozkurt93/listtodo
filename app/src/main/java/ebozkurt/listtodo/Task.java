@@ -11,6 +11,7 @@ public class Task {
     private boolean mDone;
     private int mPriority; //4 levels(low, medium, high, very high) = 0,1,2,3
     private Task mParentTask;
+    private Task mChildTask;
     private int mLevel;
 
     //add priority value (int)
@@ -68,11 +69,19 @@ public class Task {
         mParentTask = parentTask;
     }
 
+    public Task getChildTask() {
+        return mChildTask;
+    }
+
+    public void setChildTask(Task childTask) {
+        mChildTask = childTask;
+    }
+
     public int getLevel(Task task) {
         Task c = task;
         Task p = task.getParentTask();
         int level = 0;
-        while ((c.getId() != p.getId())){
+        while ((c.getId() != p.getId())) {
             c = p;
             p = p.getParentTask();
             level++;
