@@ -12,7 +12,7 @@ public class Task {
     private int mPriority; //4 levels(low, medium, high, very high) = 0,1,2,3
     private Task mParentTask;
     private Task mChildTask;
-    private int mLevel;
+    private int mLevel; //bool hasChild, hasParent eklenebilir
 
     //add priority value (int)
     //sound, image, contact later

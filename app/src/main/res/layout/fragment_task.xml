@@ -12,6 +12,8 @@
             android:id="@+id/fragment_task_title_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_assignment_turned_in_black_24dp"
+            android:drawableTint="@color/colorAccent"
             android:hint="@string/task_title_hint"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -23,6 +25,8 @@
             android:id="@+id/fragment_task_description_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_description_black_24dp"
+            android:drawableTint="@color/colorAccent"
             android:hint="@string/task_description_hint"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -36,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:buttonTint="@color/colorAccent"
             android:text="@string/task_checkbox_text"/>
 
         <SeekBar
