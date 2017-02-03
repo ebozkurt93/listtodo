@@ -173,15 +173,17 @@ public class AllListFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.i(TAG, mTask.getTitle() + " clicked");
-            /*
+
             String title = mTask.getParentTask().getTitle();
             Log.i(TAG, "parent:" + title);
-            int level = mTask.getLevel(mTask);
-            Log.i(TAG, "level " + level);
-            */
 
+            //int level = mTask.getLevel(mTask);
+            // Log.i(TAG, "level " + level);
+
+/*
             Intent intent = TaskActivity.newIntent(getActivity(), mTask.getId());
             startActivity(intent);
+            */
         }
 
         @Override
@@ -257,7 +259,7 @@ public class AllListFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
                             //todo restore task
-                            mTasks.add(position,deleted);
+                            mTasks.add(position, deleted);
                             notifyDataSetChanged();
                             Log.i(TAG, "Task " + deleted.getTitle() + " is restored to position " + position);
                         }

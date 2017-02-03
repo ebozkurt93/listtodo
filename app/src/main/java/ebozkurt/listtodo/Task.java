@@ -1,5 +1,6 @@
 package ebozkurt.listtodo;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -9,10 +10,11 @@ public class Task {
     private String mTitle;
     private String mDescription;
     private boolean mDone;
-    private int mPriority; //4 levels(low, medium, high, very high) = 0,1,2,3
+    private int mPriority; //4 priority levels(low, medium, high, very high) = 0,1,2,3
     private Task mParentTask;
-    private Task mChildTask;
-    private int mLevel; //bool hasChild, hasParent eklenebilir
+    //private ArrayList<Task> mChildTasks;
+    private int mLevel;
+    // private boolean hasChild, hasParent;
 
     //add priority value (int)
     //sound, image, contact later
@@ -69,14 +71,8 @@ public class Task {
         mParentTask = parentTask;
     }
 
-    public Task getChildTask() {
-        return mChildTask;
-    }
 
-    public void setChildTask(Task childTask) {
-        mChildTask = childTask;
-    }
-
+    /*
     public int getLevel(Task task) {
         Task c = task;
         Task p = task.getParentTask();
@@ -88,6 +84,7 @@ public class Task {
         }
         return level;
     }
+    */
 
     public void setLevel(int level) {
         mLevel = level;
