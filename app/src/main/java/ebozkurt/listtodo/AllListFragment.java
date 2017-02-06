@@ -175,29 +175,9 @@ public class AllListFragment extends Fragment {
         public void onClick(View v) {
             Log.i(TAG, mTask.getTitle() + " clicked");
 
-            try {
-                String title = mTask.getParentTask().getTitle();
-                Log.i(TAG, "parent:" + title);
-            } catch (NullPointerException e){
-                Log.i(TAG, "no parent task");
-            }
-/*
-            ArrayList<Task> children = mTask.getChildTasks();
-            ArrayList<String> names = null;
-            for(Task t : children){
-                names.add(t.getTitle());
-            }
-
-            Log.i(TAG, "children" + names.toString());
-*/
-
-            //int level = mTask.getLevel(mTask);
-            // Log.i(TAG, "level " + level);
-
-/*
             Intent intent = TaskActivity.newIntent(getActivity(), mTask.getId());
             startActivity(intent);
-            */
+
         }
 
         @Override
@@ -272,7 +252,6 @@ public class AllListFragment extends Fragment {
                     .setAction(R.string.undo, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            //todo restore task
                             mTasks.add(position, deleted);
                             notifyDataSetChanged();
                             Log.i(TAG, "Task " + deleted.getTitle() + " is restored to position " + position);
