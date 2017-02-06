@@ -20,6 +20,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -174,8 +175,21 @@ public class AllListFragment extends Fragment {
         public void onClick(View v) {
             Log.i(TAG, mTask.getTitle() + " clicked");
 
-            String title = mTask.getParentTask().getTitle();
-            Log.i(TAG, "parent:" + title);
+            try {
+                String title = mTask.getParentTask().getTitle();
+                Log.i(TAG, "parent:" + title);
+            } catch (NullPointerException e){
+                Log.i(TAG, "no parent task");
+            }
+/*
+            ArrayList<Task> children = mTask.getChildTasks();
+            ArrayList<String> names = null;
+            for(Task t : children){
+                names.add(t.getTitle());
+            }
+
+            Log.i(TAG, "children" + names.toString());
+*/
 
             //int level = mTask.getLevel(mTask);
             // Log.i(TAG, "level " + level);

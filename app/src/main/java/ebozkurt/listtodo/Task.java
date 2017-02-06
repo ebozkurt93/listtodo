@@ -1,5 +1,7 @@
 package ebozkurt.listtodo;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -12,15 +14,16 @@ public class Task {
     private boolean mDone;
     private int mPriority; //4 priority levels(low, medium, high, very high) = 0,1,2,3
     private Task mParentTask;
-    //private ArrayList<Task> mChildTasks;
+    private ArrayList<Task> mChildTasks;
     private int mLevel;
-    // private boolean hasChild, hasParent;
+    // private boolean mHasChild, mHasParent;
 
     //add priority value (int)
     //sound, image, contact later
 
     public Task() {
         this(UUID.randomUUID());
+        //mChildTasks = new ArrayList<Task>();
     }
 
     public Task(UUID id) {
@@ -71,6 +74,28 @@ public class Task {
         mParentTask = parentTask;
     }
 
+    public ArrayList<Task> getChildTasks() {
+        return mChildTasks;
+    }
+
+    public void setChildTasks(ArrayList<Task> childTasks) {
+        mChildTasks = childTasks;
+    }
+/*
+    public void addChildTask(Task parent, Task child){
+        //todo fix this function!!!
+        ArrayList<Task> tasks = parent.getChildTasks();
+            tasks.add(child);
+
+    }
+*/
+    public int getLevel() {
+        return mLevel;
+    }
+
+    public void setLevel(int level) {
+        mLevel = level;
+    }
 
     /*
     public int getLevel(Task task) {
@@ -85,8 +110,4 @@ public class Task {
         return level;
     }
     */
-
-    public void setLevel(int level) {
-        mLevel = level;
-    }
 }
