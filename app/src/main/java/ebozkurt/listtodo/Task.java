@@ -13,10 +13,15 @@ public class Task {
     private String mDescription;
     private boolean mDone;
     private int mPriority; //4 priority levels(low, medium, high, very high) = 0,1,2,3
+
+    private Task mParentTask;
+    private ArrayList<Task> mChildTasks;
+
     //sound, image, contact later
 
     public Task() {
         this(UUID.randomUUID());
+        mChildTasks = new ArrayList<Task>();
     }
 
     public Task(UUID id) {
@@ -57,5 +62,27 @@ public class Task {
 
     public void setPriority(int priority) {
         mPriority = priority;
+    }
+
+    public ArrayList<Task> getChildTasks() {
+        return mChildTasks;
+    }
+
+    public void setChildTasks(ArrayList<Task> childTasks) {
+        mChildTasks = childTasks;
+    }
+
+    public void addChildTask(Task child) {
+        Log.i("demo", Integer.toString(mChildTasks.size()));
+        //todo continue from here!!!!
+        mChildTasks.add(child);
+    }
+
+    public Task getParentTask() {
+        return mParentTask;
+    }
+
+    public void setParentTask(Task parentTask) {
+        mParentTask = parentTask;
     }
 }
