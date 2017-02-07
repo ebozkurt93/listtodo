@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -54,8 +55,7 @@ public class AllListFragment extends Fragment {
         mTaskRecyclerView = (RecyclerView) view
                 .findViewById(R.id.fragment_all_tasks_list_recycler_view);
         mTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mTaskRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
-
+        //mTaskRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources())); //todo fix divider later
 
         final FloatingActionButton mAddTaskFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.fragment_all_tasks_list_add_task_floating_action_button);
         mAddTaskFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +127,8 @@ public class AllListFragment extends Fragment {
         private TextView mDescriptionTextView;
         private CheckBox mDoneCheckBox;
         private View mPriorityView;
+        private View mDepthView;
+        private LinearLayout mLayout;
         //private FloatingActionButton mFloatingActionButton;
 
         public TaskHolder(View itemView) {
@@ -136,6 +138,9 @@ public class AllListFragment extends Fragment {
             mDescriptionTextView = (TextView) itemView.findViewById(R.id.list_item_task_description_text_view);
             mDoneCheckBox = (CheckBox) itemView.findViewById(R.id.list_item_task_done_check_box);
             mPriorityView = (View) itemView.findViewById(R.id.list_item_task_priority_view);
+            mDepthView = (View) itemView.findViewById(R.id.list_item_task_depth);
+            mLayout = (LinearLayout) itemView.findViewById(R.id.list_item_task);
+
         }
 
         public void bindTask(Task task) {
@@ -144,6 +149,25 @@ public class AllListFragment extends Fragment {
             mDescriptionTextView.setText(mTask.getDescription());
             mDoneCheckBox.setChecked(mTask.isDone());
             setPriorityColor(mTask);
+            mLayout.setPadding(mTask.getDepth() * 50, 0, 0, 0);
+            //mDepthView.setBackgroundColor(30 * mTask.getDepth());
+            int s = 0;
+//todo change colors here
+            switch(mTask.getDepth()){
+                case 0:
+                    s = ContextCompat.getColor(getContext(), R.color.priority0);
+                    break;
+                case 1:
+                    s = ContextCompat.getColor(getContext(), R.color.priority1);
+                    break;
+                case 2:
+                    s = ContextCompat.getColor(getContext(), R.color.priority2);
+                    break;
+                case 3:
+                    s = ContextCompat.getColor(getContext(), R.color.priority3);
+                    break;
+            }
+            mDepthView.setBackgroundColor(s);
             //mPriorityView.setBackgroundColor(244);
         }
 

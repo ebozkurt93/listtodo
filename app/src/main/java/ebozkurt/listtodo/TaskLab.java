@@ -22,16 +22,18 @@ public class TaskLab {
 
     private TaskLab(Context context) {
         mTasks = new ArrayList<>();
-/*
+
         for (int i = 0; i < 20; i++) {
             Task task = new Task();
             task.setTitle("Task #" + i);
             task.setDescription("Task description #" + i);
             task.setDone(i % 2 == 0); //every other task will be done
             task.setPriority(i % 4);
+            task.setDepth(i % 4);
             mTasks.add(task);
         }
-*/
+
+        /*
         Task task = new Task();
         Task c1 = new Task();
 
@@ -56,11 +58,7 @@ public class TaskLab {
 
         //task.addChildTask(c1);
         mTasks.add(c1);
-
-
-
-
-
+*/
 
     }
 
