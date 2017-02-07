@@ -175,6 +175,12 @@ public class AllListFragment extends Fragment {
         public void onClick(View v) {
             Log.i(TAG, mTask.getTitle() + " clicked");
 
+            /*
+            Log.i(TAG, mTask.getParentTask().toString());
+            Log.i(TAG, mTask.getChildTasks().toString());
+            //todo if you want to keep logs for parent/child tasks than use exception handling
+*/
+
             Intent intent = TaskActivity.newIntent(getActivity(), mTask.getId());
             startActivity(intent);
 

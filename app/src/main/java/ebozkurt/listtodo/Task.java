@@ -16,12 +16,12 @@ public class Task {
 
     private Task mParentTask;
     private ArrayList<Task> mChildTasks;
+    private int mDepth;
 
     //sound, image, contact later
 
     public Task() {
         this(UUID.randomUUID());
-        mChildTasks = new ArrayList<Task>();
     }
 
     public Task(UUID id) {
@@ -72,10 +72,16 @@ public class Task {
         mChildTasks = childTasks;
     }
 
+
     public void addChildTask(Task child) {
-        Log.i("demo", Integer.toString(mChildTasks.size()));
-        //todo continue from here!!!!
+        if(mChildTasks == null) {
+            mChildTasks = new ArrayList<Task>();
+        }
         mChildTasks.add(child);
+    }
+
+    public void removeChildTask(Task removedChild){
+        mChildTasks.remove(removedChild);
     }
 
     public Task getParentTask() {
@@ -84,5 +90,13 @@ public class Task {
 
     public void setParentTask(Task parentTask) {
         mParentTask = parentTask;
+    }
+
+    public int getDepth() {
+        return mDepth;
+    }
+
+    public void setDepth(int depth) {
+        mDepth = depth;
     }
 }

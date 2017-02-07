@@ -33,22 +33,31 @@ public class TaskLab {
         }
 */
         Task task = new Task();
+        Task c1 = new Task();
+
+
         task.setTitle("Task 1");
         task.setDescription("Task description 1");
         task.setDone(true);
         task.setPriority(1);
-        task.setChildTasks(null);
+        task.addChildTask(c1);
         task.setParentTask(null);
+        task.setDepth(0);
         mTasks.add(task);
 
-        Task c1 = new Task();
+
         c1.setTitle("child 1");
         c1.setDescription("c1");
         c1.setDone(true);
         c1.setPriority(1);
         c1.setParentTask(task);
-        task.addChildTask(c1);
+        c1.setChildTasks(null);
+        c1.setDepth(1);
+
+        //task.addChildTask(c1);
         mTasks.add(c1);
+
+
 
 
 
