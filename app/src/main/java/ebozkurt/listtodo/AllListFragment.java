@@ -149,13 +149,18 @@ public class AllListFragment extends Fragment {
             mDescriptionTextView.setText(mTask.getDescription());
             mDoneCheckBox.setChecked(mTask.isDone());
             setPriorityColor(mTask);
-            mLayout.setPadding(mTask.getDepth() * 50, 0, 0, 0);
-            //mDepthView.setBackgroundColor(30 * mTask.getDepth());
+            int padding_in_dp = 4;
+            final float scale = getResources().getDisplayMetrics().density;
+            int padding_in_px = (int) (padding_in_dp * scale + 0.5f);
+            mLayout.setPadding(mTask.getDepth() * padding_in_px, 0, 0, 0);
             int s = 0;
 //todo change colors here
             switch(mTask.getDepth()){
                 case 0:
                     s = ContextCompat.getColor(getContext(), R.color.priority0);
+                    ViewGroup.LayoutParams params = mDepthView.getLayoutParams();
+                    params.width = 0;
+                    mDepthView.setLayoutParams(params);
                     break;
                 case 1:
                     s = ContextCompat.getColor(getContext(), R.color.priority1);
@@ -278,7 +283,7 @@ public class AllListFragment extends Fragment {
             Log.i(TAG, "onItemDismiss: " + position);
             final Task deleted = mTasks.remove(position);
             mAdapter.notifyDataSetChanged();
-            Snackbar.make(mTaskRecyclerView, R.string.task_deleted, Snackbar.LENGTH_LONG)
+            Snackbar snackbar = Snackbar.make(mTaskRecyclerView, R.string.task_deleted, Snackbar.LENGTH_LONG)
                     .setAction(R.string.undo, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -286,7 +291,10 @@ public class AllListFragment extends Fragment {
                             notifyDataSetChanged();
                             Log.i(TAG, "Task " + deleted.getTitle() + " is restored to position " + position);
                         }
-                    }).show();
+                    });
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+            snackbar.show();
         }
 
         @Override
